@@ -10,7 +10,7 @@ public static partial class DiscordHelpers
         return roles.Any(x => x.Permissions.Administrator) || ctx.User.Id == ctx.Guild.OwnerId;
     }
 
-    public static ulong OwnerId = 0;
+    public static ulong OwnerId { get; set; } = 0;
 
-    public static bool IsOwner(this IUser sgu) => sgu.Id == 301764235887902727;
+    public static bool IsOwner(this IUser sgu) => sgu.Id == OwnerId;
 }

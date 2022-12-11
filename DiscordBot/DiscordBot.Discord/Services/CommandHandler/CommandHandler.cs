@@ -41,7 +41,8 @@ public partial class CommandHandler : ICommandHandler
 
     public async Task Client_Ready()
     {
-        await _client.SetGameAsync("");
+        DiscordHelpers.OwnerId = ulong.Parse(_configuration["Discord:OwnerId"]!);
+        await _client.SetGameAsync(_configuration["Discord:GameActivity"]);
         _logger.LogInformation("Bot is online!");
     }
 
@@ -87,31 +88,23 @@ public partial class CommandHandler : ICommandHandler
 
         if (result is DiscordBotResult runTimeResult)
         {
-            if (command.Value.Module.Name == "Admin")
-            {
-                _ = DeleteMessage(context.Message, runTimeResult.AnswerSent!);
-                return;
-            }
-
             if (result.IsSuccess)
             {
                 if (runTimeResult.Reason is not null)
                 {
-                    var m = await context.Channel.SendMessageAsync(runTimeResult.Reason);
-
-                    if (command.Value.Module.Name == "Admin")
-                         _ = DeleteMessage(context.Message, m);
+                    await context.Channel.SendMessageAsync(runTimeResult.Reason);
                 }
+
                 return;
             }
 
-             await context.Channel.SendMessageAsync($"{runTimeResult.Error}: {runTimeResult.Reason}");
+            await context.Channel.SendMessageAsync($"{runTimeResult.Error}: {runTimeResult.Reason}");
 
             var member = context.User.GetUserAndDiscriminator();
             var moduleName = command.Value.Module.Name;
             var commandName = command.Value.Name;
 
-            _logger.LogError($"{member} tried to use {commandName} (module: {moduleName}) this resultet in a {runTimeResult?.Error?.ToString()}");
+            _logger.LogError("{member} tried to use {commandName} (module: {moduleName}) this resulted in a {error}", member, commandName, moduleName, runTimeResult.Error.ToString());
         }
     }
 

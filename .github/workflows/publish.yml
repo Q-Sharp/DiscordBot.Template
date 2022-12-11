@@ -1,0 +1,54 @@
+name: publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 7.0.*
+        include-prerelease: true
+
+    - name: Build Blazor template
+      run: dotnet build ./DiscordBot/
+
+    - uses: paulhatch/semantic-version@v4.0.2
+      id: version_tag
+      with:
+        # The prefix to use to identify tags
+        tag_prefix: "v"
+        major_pattern: "(MAJOR)"
+        minor_pattern: "(MINOR)"
+        format: "${major}.${minor}.${patch}"
+        user_format_type: "json"
+
+    - name: tag release
+      run: |
+        git tag ${{ steps.version_tag.outputs.version_tag }}
+        git push origin ${{ steps.version_tag.outputs.version_tag }}
+
+    - name: Build Package
+      run: dotnet pack -o ./publish -p:PackageVersion=${{steps.version_tag.outputs.version_tag}}
+
+    - name: Push to Nuget
+      run: dotnet nuget push ./publish/DiscordBot.Template.${{steps.version_tag.outputs.version_tag}}.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+
+    - name: Upload nupkg to github releases
+      uses: svenstaro/upload-release-action@v2
+      with:
+          body: ""
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./publish/*
+          release_name: Release ${{ steps.version_tag.outputs.version_tag }}
+          tag: Release_${{ steps.version_tag.outputs.version_tag }}
+          file_glob: true
+          overwrite: true      

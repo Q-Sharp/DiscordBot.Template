@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageType>Template</PackageType>
+        <PackageId>DiscordBot.Template</PackageId>
+        <Title>Discord Bot Template</Title>
+        <Authors>Q-Sharp</Authors>
+        <Description>This template provides a Discord Bot with Discord.NET</Description>
+        <PackageTags>dotnet-new;templates</PackageTags>
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<Summary>This template provides a Discord Bot with Discord.NET</Summary>
+        <IncludeContentInPack>true</IncludeContentInPack>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <ContentTargetFolders>content</ContentTargetFolders>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <NoDefaultExcludes>true</NoDefaultExcludes>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/Q-Sharp/DiscordBot.Template</PackageProjectUrl>
+        <Copyright>2022 Q-Sharp</Copyright>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/Q-Sharp/DiscordBot.Template</RepositoryUrl>
+        <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <Version>1.0.0</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="DiscordBot\**\*" Exclude="**\bin\**;**\obj\**;**\.vs\**;" />
+        <Compile Remove="**\**" />
+        
+        <EmbeddedResource Remove="**\bin\**;**\obj\**" />
+        <None Remove="**\bin\**; **\obj\**" />
+
+        <None Update="LICENSE;README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+
+        <None Include="DiscordBot\.template.config\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+
+        <None Include="LICENSE;README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+    </ItemGroup>
+
+</Project>

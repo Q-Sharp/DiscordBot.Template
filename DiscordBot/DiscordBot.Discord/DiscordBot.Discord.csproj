@@ -5,7 +5,6 @@
 		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<UserSecretsId>5e0c54fd-f21a-4c85-be3d-96bf36373619</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,7 +14,6 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.*" />
 	</ItemGroup>
 
-	<!-- Conditionally obtain references for the .NET Framework 4.0 target -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.*" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.*" />
@@ -26,7 +24,6 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.*" />
 	</ItemGroup>
 
-	<!-- Conditionally obtain references for the .NET Framework 4.5 target -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.*" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.*" />

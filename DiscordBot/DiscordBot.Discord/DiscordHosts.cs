@@ -1,6 +1,4 @@
-﻿using Discord;
-
-namespace DiscordBot.Discord;
+﻿namespace DiscordBot.Discord;
 
 public static class DiscordHosts
 {

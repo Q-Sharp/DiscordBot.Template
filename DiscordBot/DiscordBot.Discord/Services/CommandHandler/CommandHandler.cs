@@ -20,14 +20,11 @@ public partial class CommandHandler : ICommandHandler
     public async Task InitializeAsync()
     {
         await _commands.AddModulesAsync(GetType().Assembly, _services);
-
         _commands.CommandExecuted += CommandExecutedAsync;
         _commands.Log += LogAsync;
 
         _client.MessageReceived += Client_HandleCommandAsync;
         _client.Ready += Client_Ready;
-        _client.Log += LogAsync;
-        _client.Disconnected += Client_Disconnected;
     }
 
     public async Task LogAsync(LogMessage logMessage)
@@ -63,18 +60,6 @@ public partial class CommandHandler : ICommandHandler
         {
             await _commands.ExecuteAsync(context, pos, _services);
         }
-    }
-
-    public async Task Client_Disconnected(Exception e)
-    {
-        _logger.LogError(e, "Client disconnected");
-
-        await Task.Run(() =>
-        {
-            var DiscordBot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.FriendlyName);
-            Process.Start(DiscordBot);
-            Environment.Exit(0);
-        });
     }
 
     public async Task CommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result)

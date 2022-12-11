@@ -1,7 +1,7 @@
-﻿Log.Logger = new LoggerConfiguration()
-            .Enrich.FromLogContext()
-            .WriteTo.File(path: Path.Combine(Environment.CurrentDirectory, "DiscordBot.log"), rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+﻿Log.Logger  = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
 
 try
 {

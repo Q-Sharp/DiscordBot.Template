@@ -9,12 +9,12 @@
     ],
     "name": "DiscordBot Template",
     "identity": "DiscordBot.Template",
-    "shortName": "DiscordBotTemplate",
+    "shortName": "discordbot",
     "tags": {
         "language": "C#",
         "type":"solution"
     },
-    "sourceName": "DiscordBotTemplate",
+    "sourceName": "DiscordBot",
     "preferNameDirectory": true,
     "guids": [
 		  "7CEC6056-0AD0-40EB-8426-D77C96A9786B",

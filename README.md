@@ -12,7 +12,7 @@
 ### install
 
 ```
-dotnet new -i DiscordBot.Template
+dotnet new install DiscordBot.Template
 ```
 
 ### run
@@ -81,7 +81,7 @@ dotnet new -i <PATH>
 Where `<PATH>` is the path to the folder containing .template.config.
 
 
-## Credits, Used NuGet packages + ASP.NET Core 7.0 standard packages
+## Credits, Used NuGet packages
 
 - Discord.Net
 - Serilog 

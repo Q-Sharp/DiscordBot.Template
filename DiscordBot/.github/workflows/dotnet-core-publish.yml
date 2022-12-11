@@ -1,0 +1,50 @@
+name: Compile
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.0.100
+
+    - name: Build
+      run: dotnet build -c Release
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: .NET Publish
+      run: dotnet publish -c Release -r linux-x64 -o ./publish --no-self-contained /p:PublishReadyToRun=false /p:DebugType=None /p:DebugSymbols=false
+
+    - name: App Settings Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: ./publish/appsettings.json
+      env:
+        DetailedErrors: false
+        Discord.DevToken: ${{ secrets.DISCORD_DEV_TOKEN }}
+        Discord.Token: ${{ secrets.DISCORD_TOKEN }}
+
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.2.11
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete-excluded --filter 'protect *.db' --filter 'protect *.log' --filter 'protect *.json'"
+          SOURCE: ./publish
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          

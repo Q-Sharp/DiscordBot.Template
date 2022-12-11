@@ -1,0 +1,28 @@
+{
+    "author": "Q-Sharp",
+    "classifications": [
+      "Discord",
+      "Discord bot",
+      "Bot",
+      "Console",
+      "Solution"
+    ],
+    "name": "DiscordBot Template",
+    "identity": "DiscordBot.Template",
+    "shortName": "DiscordBotTemplate",
+    "tags": {
+        "language": "C#",
+        "type":"solution"
+    },
+    "sourceName": "DiscordBotTemplate",
+    "preferNameDirectory": true,
+    "guids": [
+		  "7CEC6056-0AD0-40EB-8426-D77C96A9786B",
+		  "2912DD7D-A001-46FB-9777-F7CA8A759241"
+    ],
+   "primaryOutputs": [
+    {
+      "path": "DiscordBot.sln"
+    }
+  ]
+}

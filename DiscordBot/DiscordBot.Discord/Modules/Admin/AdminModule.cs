@@ -20,7 +20,6 @@ public partial class AdminModule : DiscordBotModule, IAdminModule
     {
         await ReplyAsync("Restarting.....");
         _adminService.Restart();
-
         return FromSuccess();
     }
 
@@ -30,7 +29,6 @@ public partial class AdminModule : DiscordBotModule, IAdminModule
     public async Task<RuntimeResult> ShowServers()
     {
         await ReplyAsync(string.Join(Environment.NewLine, Context.Client.Guilds.Select(x => x.Name)));
-
         return FromSuccess();
     }
 

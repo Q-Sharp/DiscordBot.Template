@@ -4,10 +4,8 @@ public abstract class DiscordBotModule : ModuleBase<SocketCommandContext>
 {
     protected ICommandHandler _commandHandler;
 
-    public DiscordBotModule(ICommandHandler commandHandler)
-    {
-        _commandHandler = commandHandler;
-    }
+    public DiscordBotModule(ICommandHandler commandHandler) 
+        => _commandHandler = commandHandler;
 
     public static DiscordBotResult FromSuccess(string? successMessage = null, IMessage? answer = null)
         => DiscordBotResult.Create(null, successMessage, answer);

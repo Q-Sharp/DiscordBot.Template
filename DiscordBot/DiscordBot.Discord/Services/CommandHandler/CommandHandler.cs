@@ -19,7 +19,7 @@ public partial class CommandHandler : ICommandHandler
 
     public async Task InitializeAsync()
     {
-         await _commands.AddModulesAsync(GetType().Assembly, _services);
+        await _commands.AddModulesAsync(GetType().Assembly, _services);
 
         _commands.CommandExecuted += CommandExecutedAsync;
         _commands.Log += LogAsync;
@@ -61,7 +61,7 @@ public partial class CommandHandler : ICommandHandler
 
         if (msg.HasStringPrefix(prefix, ref pos, StringComparison.OrdinalIgnoreCase) || msg.HasMentionPrefix(_client.CurrentUser, ref pos))
         {
-             await _commands.ExecuteAsync(context, pos, _services);
+            await _commands.ExecuteAsync(context, pos, _services);
         }
     }
 
@@ -82,7 +82,7 @@ public partial class CommandHandler : ICommandHandler
         // error happened
         if (!command.IsSpecified)
         {
-             await context.Channel.SendMessageAsync($"I don't know this command: {context.Message}");
+            await context.Channel.SendMessageAsync($"I don't know this command: {context.Message}");
             return;
         }
 
@@ -106,16 +106,5 @@ public partial class CommandHandler : ICommandHandler
 
             _logger.LogError("{member} tried to use {commandName} (module: {moduleName}) this resulted in a {error}", member, commandName, moduleName, runTimeResult.Error.ToString());
         }
-    }
-
-    private static async Task DeleteMessage(IMessage userMsg, IMessage answer)
-    {
-        await Task.Delay(TimeSpan.FromMinutes(2));
-
-        if (userMsg is not null)
-            await userMsg.DeleteAsync(new RequestOptions { AuditLogReason = "Autoremoved" });
-
-        if (answer is not null)
-            await answer.DeleteAsync(new RequestOptions { AuditLogReason = "Autoremoved" });
     }
 }

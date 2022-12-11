@@ -21,7 +21,7 @@ jobs:
     - name: Build Blazor template
       run: dotnet build ./DiscordBot/
 
-    - uses: paulhatch/semantic-version@v4.0.2
+    - uses: PaulHatch/semantic-version@v5.0.0-beta
       id: version_tag
       with:
         major_pattern: "(MAJOR)"
@@ -35,10 +35,10 @@ jobs:
         git push origin ${{ steps.version_tag.outputs.version_tag }}
 
     - name: Build Package
-      run: dotnet pack -o ./publish -p:PackageVersion=${{steps.version_tag.outputs.version_tag}}
+      run: dotnet pack -o ./publish -p:PackageVersion=${{steps.version_tag.outputs.version}}
 
     - name: Push to Nuget
-      run: dotnet nuget push ./publish/DiscordBot.Template.${{steps.version_tag.outputs.version_tag}}.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push ./publish/DiscordBot.Template.${{steps.version_tag.outputs.version}}.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
 
     - name: Upload nupkg to github releases
       uses: svenstaro/upload-release-action@v2
